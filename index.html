@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Indian Stock Market Overview&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Use Tailwind CSS for rapid, responsive styling --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Custom font and scroll behavior */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scroll-behavior: smooth;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f3f4f6;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Basic styling for the modal overlay and content */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: rgba(0, 0, 0, 0.6);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(5px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 50;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 60;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-gray-100 min-h-screen flex flex-col items-center py-12 px-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Main container with responsive max-width and centered layout --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="max-w-4xl w-full bg-white rounded-3xl shadow-2xl p-8 md:p-12 transition-all duration-300 transform scale-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Header Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;header class="text-center mb-8 md:mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-3xl md:text-5xl font-extrabold text-blue-900 mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Indian Stock Market Insights</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-lg text-gray-600"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>A simple overview of the major indices and some top-performing stocks.</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Indices Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section class="mb-8 md:mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center md:text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Key Indices</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Nifty 50 Card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-blue-50 p-6 rounded-2xl shadow-md border-2 border-blue-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-xl font-semibold text-blue-700 mb-1"&gt;Nifty 50&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-3xl font-bold text-blue-900"&gt;22,500.25&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-green-500 font-medium"&gt;+1.25% today&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-sm text-gray-500 mt-2"&gt;Represents India's top 50 companies listed on the NSE.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Sensex Card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-red-50 p-6 rounded-2xl shadow-md border-2 border-red-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-xl font-semibold text-red-700 mb-1"&gt;Sensex&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-3xl font-bold text-red-900"&gt;74,200.80&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-red-500 font-medium"&gt;-0.80% today&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-sm text-gray-500 mt-2"&gt;Benchmark index of the 30 well-established companies listed on the BSE.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Top Stocks Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section class="mb-8 md:mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center md:text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Top Performing Stocks</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="stock-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Stock cards will be dynamically added here by JavaScript --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Footer Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;footer class="text-center text-sm text-gray-400 mt-auto pt-8 border-t border-gray-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&amp;copy; 2024 Indian Stock Market Overview. All rights reserved.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Modal for displaying stock details (hidden by default) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="stock-modal" class="modal-overlay fixed inset-0 hidden items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-content w-full max-w-lg rounded-2xl p-8 shadow-2xl relative transition-all transform scale-95 opacity-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors duration-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 id="modal-title" class="text-2xl font-bold text-blue-900 mb-2"&gt;&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="modal-description" class="text-gray-700 mb-4"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="modal-price" class="text-xl font-semibold mb-2"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="modal-change" class="text-lg font-semibold"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Sample data for the stocks. In a real application, this would be fetched from an API.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const stocks = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: 'Reliance Industries',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>symbol: 'RELIANCE',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>price: '₹2,800',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>change: '+2.10%',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>changeType: 'positive',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'India\'s largest conglomerate with interests in energy, retail, and digital services. A market leader on the BSE and NSE.'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: 'Tata Consultancy Services',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>symbol: 'TCS',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>price: '₹3,750',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>change: '+0.95%',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>changeType: 'positive',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'A leading global IT services, consulting, and business solutions organization. A key player in the Indian tech sector.'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: 'HDFC Bank',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>symbol: 'HDFCBANK',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>price: '₹1,500',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>change: '-1.50%',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>changeType: 'negative',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'One of India\'s largest private sector banks, offering a wide range of financial products and services.'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: 'Infosys',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>symbol: 'INFY',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>price: '₹1,600',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>change: '+3.20%',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>changeType: 'positive',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'A multinational information technology company that provides business consulting, information technology and outsourcing services.'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: 'ICICI Bank',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>symbol: 'ICICIBANK',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>price: '₹1,050',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>change: '+0.50%',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>changeType: 'positive',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'An Indian multinational bank and financial services company headquartered in Mumbai, Maharashtra.'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Function to create a stock card and add it to the page</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function createStockCard(stock) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const card = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.className = 'bg-white p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl cursor-pointer border border-gray-200';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.onclick = () =&gt; showModal(stock);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const changeColor = stock.changeType === 'positive' ? 'text-green-500' : 'text-red-500';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 class="text-xl font-semibold text-gray-800 mb-1"&gt;${stock.name}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-sm text-gray-500 mb-2"&gt;${stock.symbol} | &lt;span class="${changeColor} font-medium"&gt;${stock.change}&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-2xl font-bold text-gray-900"&gt;${stock.price}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return card;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Loop through the stocks array and add each card to the page</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const stockListContainer = document.getElementById('stock-list');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>stocks.forEach(stock =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stockListContainer.appendChild(createStockCard(stock));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Get modal elements</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modal = document.getElementById('stock-modal');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalContent = modal.querySelector('.modal-content');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalTitle = document.getElementById('modal-title');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalDescription = document.getElementById('modal-description');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalPrice = document.getElementById('modal-price');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalChange = document.getElementById('modal-change');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Function to show the modal with stock details</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function showModal(stock) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalTitle.textContent = stock.name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalDescription.textContent = stock.description;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalPrice.textContent = `Current Price: ${stock.price}`;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const changeColor = stock.changeType === 'positive' ? 'text-green-600' : 'text-red-600';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalChange.innerHTML = `Change: &lt;span class="${changeColor}"&gt;${stock.change}&lt;/span&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>modal.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modal.classList.add('flex');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>modalContent.classList.remove('scale-95', 'opacity-0');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>modalContent.classList.add('scale-100', 'opacity-100');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, 10);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Function to hide the modal</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function closeModal() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalContent.classList.remove('scale-100', 'opacity-100');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalContent.classList.add('scale-95', 'opacity-0');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>modal.classList.remove('flex');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>modal.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, 300);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Close modal when clicking outside of it</p>
+<p class="p1"><span class="Apple-converted-space">        </span>modal.addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (e.target === modal) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>closeModal();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
