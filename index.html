@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Stock Market Overview</title>
+    <!-- Use Tailwind CSS for rapid, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font and scroll behavior */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f3f4f6;
+        }
+
+        /* Basic styling for the modal overlay and content */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 50;
+        }
+        .modal-content {
+            background-color: white;
+            z-index: 60;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-12 px-4">
+    <!-- Main container with responsive max-width and centered layout -->
+    <div class="max-w-4xl w-full bg-white rounded-3xl shadow-2xl p-8 md:p-12 transition-all duration-300 transform scale-100">
+        <!-- Header Section -->
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-blue-900 mb-2">
+                Indian Stock Market Insights
+            </h1>
+            <p class="text-lg text-gray-600">
+                A simple overview of the major indices and some top-performing stocks.
+            </p>
+        </header>
+
+        <!-- Indices Section -->
+        <section class="mb-8 md:mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center md:text-left">
+                Key Indices
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Nifty 50 Card -->
+                <div class="bg-blue-50 p-6 rounded-2xl shadow-md border-2 border-blue-200">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-1">Nifty 50</h3>
+                    <p class="text-3xl font-bold text-blue-900">22,500.25</p>
+                    <p class="text-green-500 font-medium">+1.25% today</p>
+                    <p class="text-sm text-gray-500 mt-2">Represents India's top 50 companies listed on the NSE.</p>
+                </div>
+                <!-- Sensex Card -->
+                <div class="bg-red-50 p-6 rounded-2xl shadow-md border-2 border-red-200">
+                    <h3 class="text-xl font-semibold text-red-700 mb-1">Sensex</h3>
+                    <p class="text-3xl font-bold text-red-900">74,200.80</p>
+                    <p class="text-red-500 font-medium">-0.80% today</p>
+                    <p class="text-sm text-gray-500 mt-2">Benchmark index of the 30 well-established companies listed on the BSE.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Stocks Section -->
+        <section class="mb-8 md:mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center md:text-left">
+                Top Performing Stocks
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="stock-list">
+                <!-- Stock cards will be dynamically added here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Modal for displaying stock details (hidden by default) -->
+        <div id="stock-modal" class="modal-overlay fixed inset-0 hidden items-center justify-center p-4">
+            <div class="modal-content w-full max-w-lg rounded-2xl p-8 shadow-2xl relative transition-all transform scale-95 opacity-0">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <h3 id="modal-title" class="text-2xl font-bold text-blue-900 mb-2"></h3>
+                <p id="modal-description" class="text-gray-700 mb-4"></p>
+                <p id="modal-price" class="text-xl font-semibold mb-2"></p>
+                <p id="modal-change" class="text-lg font-semibold"></p>
+            </div>
+        </div>
+
+        <script>
+            // Sample data for the stocks. In a real application, this would be fetched from an API.
+            const stocks = [
+                {
+                    name: 'Reliance Industries',
+                    symbol: 'RELIANCE',
+                    price: '₹2,800',
+                    change: '+2.10%',
+                    changeType: 'positive',
+                    description: 'India\'s largest conglomerate with interests in energy, retail, and digital services. A market leader on the BSE and NSE.'
+                },
+                {
+                    name: 'Tata Consultancy Services',
+                    symbol: 'TCS',
+                    price: '₹3,750',
+                    change: '+0.95%',
+                    changeType: 'positive',
+                    description: 'A leading global IT services, consulting, and business solutions organization. A key player in the Indian tech sector.'
+                },
+                {
+                    name: 'HDFC Bank',
+                    symbol: 'HDFCBANK',
+                    price: '₹1,500',
+                    change: '-1.50%',
+                    changeType: 'negative',
+                    description: 'One of India\'s largest private sector banks, offering a wide range of financial products and services.'
+                },
+                {
+                    name: 'Infosys',
+                    symbol: 'INFY',
+                    price: '₹1,600',
+                    change: '+3.20%',
+                    changeType: 'positive',
+                    description: 'A multinational information technology company that provides business consulting, information technology and outsourcing services.'
+                },
+                {
+                    name: 'ICICI Bank',
+                    symbol: 'ICICIBANK',
+                    price: '₹1,050',
+                    change: '+0.50%',
+                    changeType: 'positive',
+                    description: 'An Indian multinational bank and financial services company headquartered in Mumbai, Maharashtra.'
+                }
+            ];
+
+            // Function to create a stock card and add it to the page
+            function createStockCard(stock) {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl cursor-pointer border border-gray-200';
+                card.onclick = () => showModal(stock);
+
+                const changeColor = stock.changeType === 'positive' ? 'text-green-500' : 'text-red-500';
+
+                card.innerHTML = `
+                    <h3 class="text-xl font-semibold text-gray-800 mb-1">${stock.name}</h3>
+                    <p class="text-sm text-gray-500 mb-2">${stock.symbol} | <span class="${changeColor} font-medium">${stock.change}</span></p>
+                    <p class="text-2xl font-bold text-gray-900">${stock.price}</p>
+                `;
+                return card;
+            }
+
+            // Loop through the stocks array and add each card to the page
+            const stockListContainer = document.getElementById('stock-list');
+            stocks.forEach(stock => {
+                stockListContainer.appendChild(createStockCard(stock));
+            });
+
+            // Get modal elements
+            const modal = document.getElementById('stock-modal');
+            const modalContent = modal.querySelector('.modal-content');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const modalPrice = document.getElementById('modal-price');
+            const modalChange = document.getElementById('modal-change');
+
+            // Function to show the modal with stock details
+            function showModal(stock) {
+                modalTitle.textContent = stock.name;
+                modalDescription.textContent = stock.description;
+                modalPrice.textContent = `Current Price: ${stock.price}`;
+                
+                const changeColor = stock.changeType === 'positive' ? 'text-green-600' : 'text-red-600';
+                modalChange.innerHTML = `Change: <span class="${changeColor}">${stock.change}</span>`;
+
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            }
+
+            // Function to hide the modal
+            function closeModal() {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.remove('flex');
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+
+            // Close modal when clicking outside of it
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        </script>
+</body>
+</html>
