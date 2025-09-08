@@ -190,56 +190,71 @@
             const stockTableBody = document.getElementById('stock-table-body');
             
             const indianStocks = [
-                { symbol: 'RELIANCE.NS', name: 'Reliance Industries' },
-                { symbol: 'TCS.NS', name: 'Tata Consultancy Services' },
-                { symbol: 'HDFCBANK.NS', name: 'HDFC Bank' },
-                { symbol: 'INFY.NS', name: 'Infosys' },
-                { symbol: 'ICICIBANK.NS', name: 'ICICI Bank' },
-                { symbol: 'NTPC.NS', name: 'NTPC Limited' },
-                { symbol: 'SBIN.NS', name: 'State Bank of India' },
-                { symbol: 'BHARTIARTL.NS', name: 'Bharti Airtel' },
-                { symbol: 'MARUTI.NS', name: 'Maruti Suzuki India' },
-                { symbol: 'AXISBANK.NS', name: 'Axis Bank' }
+                { symbol: 'NSE:RELIANCE', name: 'Reliance Industries' },
+                { symbol: 'NSE:TCS', name: 'Tata Consultancy Services' },
+                { symbol: 'NSE:HDFCBANK', name: 'HDFC Bank' },
+                { symbol: 'NSE:INFY', name: 'Infosys' },
+                { symbol: 'NSE:ICICIBANK', name: 'ICICI Bank' },
+                { symbol: 'NSE:NTPC', name: 'NTPC Limited' },
+                { symbol: 'NSE:SBIN', name: 'State Bank of India' },
+                { symbol: 'NSE:BHARTIARTL', name: 'Bharti Airtel' },
+                { symbol: 'NSE:MARUTI', name: 'Maruti Suzuki India' },
+                { symbol: 'NSE:AXISBANK', name: 'Axis Bank' }
             ];
 
             async function fetchLiveStockData() {
-                // Use a CORS proxy to bypass security restrictions
-                const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                const symbols = indianStocks.map(s => s.symbol).join(',');
-                const apiUrl = `${proxyUrl}https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}&fields=regularMarketPrice,regularMarketChangePercent,longName,symbol`;
-
+                // Use a different, more reliable CORS proxy
+                const proxyUrl = 'https://corsproxy.io/?';
+                
+                // Clear the loading message
+                stockTableBody.innerHTML = '';
+                
                 try {
-                    const response = await fetch(apiUrl);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const data = await response.json();
-                    
-                    // Clear the loading message
-                    stockTableBody.innerHTML = '';
-                    
-                    // Check if a result was returned
-                    if (!data.quoteResponse || !data.quoteResponse.result || data.quoteResponse.result.length === 0) {
-                        stockTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500 py-4">No data available. The market may be closed, or the data source is temporarily unavailable.</td></tr>`;
-                        return;
-                    }
-
-                    data.quoteResponse.result.forEach(stockData => {
-                        const symbol = stockData.symbol.replace('.NS', '');
-                        const name = stockData.longName;
-                        const price = stockData.regularMarketPrice ? stockData.regularMarketPrice.toFixed(2) : 'N/A';
-                        const change = stockData.regularMarketChangePercent ? stockData.regularMarketChangePercent.toFixed(2) : 'N/A';
-
-                        const changeColor = parseFloat(change) >= 0 ? 'text-green-600' : 'text-red-600';
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${symbol}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${name}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹${price}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold ${changeColor}">${change}%</td>
-                        `;
-                        stockTableBody.appendChild(row);
+                    const fetchPromises = indianStocks.map(stock => {
+                        const apiUrl = `${proxyUrl}https://www.google.com/finance/quote/${stock.symbol}`;
+                        return fetch(apiUrl).then(response => response.text()).then(html => ({ stock, html }));
                     });
+
+                    const results = await Promise.all(fetchPromises);
+                    const fragment = document.createDocumentFragment();
+
+                    results.forEach(result => {
+                        const { stock, html } = result;
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        const priceElement = doc.querySelector('[data-last-price]');
+                        const changeElement = doc.querySelector('[data-last-change]');
+                        
+                        let price = 'N/A';
+                        let change = 'N/A';
+
+                        if (priceElement) {
+                            price = priceElement.getAttribute('data-last-price');
+                        }
+                        if (changeElement) {
+                            const changeValue = parseFloat(changeElement.getAttribute('data-last-change'));
+                            const changePercentage = parseFloat(doc.querySelector('[data-percent-change]').getAttribute('data-percent-change'));
+                            change = `${(changePercentage * 100).toFixed(2)}`;
+                            const changeColor = changeValue >= 0 ? 'text-green-600' : 'text-red-600';
+                            
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${stock.symbol.split(':')[1]}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${stock.name}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹${parseFloat(price).toFixed(2)}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold ${changeColor}">${change}%</td>
+                            `;
+                            fragment.appendChild(row);
+                        }
+                    });
+
+                    if (fragment.children.length > 0) {
+                        stockTableBody.appendChild(fragment);
+                    } else {
+                        stockTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500 py-4">No data available. The data source may be temporarily unavailable.</td></tr>`;
+                    }
+                    
                 } catch (error) {
                     stockTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500 py-4">Error fetching data. Please try again later.</td></tr>`;
                     console.error("Error fetching stock data:", error);
