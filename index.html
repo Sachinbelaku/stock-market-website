@@ -27,7 +27,7 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center py-12 px-4">
-    <!-- Main container with responsive max-width and centered layout -->
+    <!-- Main container with responsive max-w and centered layout -->
     <div class="max-w-4xl w-full bg-white rounded-3xl shadow-2xl p-8 md:p-12 transition-all duration-300 transform scale-100">
         <!-- Header Section -->
         <header class="text-center mb-8 md:mb-12">
@@ -75,7 +75,7 @@
         <!-- Dynamic Stock Data Table -->
         <section class="mb-8 md:mb-12">
             <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center md:text-left">
-                Live Market Data (Simulated)
+                Live Market Data
             </h2>
             <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -186,37 +186,57 @@
                 stockListContainer.appendChild(createStockCard(stock));
             });
 
-            // --- New Dynamic Data Fetching Section ---
+            // --- Real-time Stock Data Fetching with a CORS proxy ---
             const stockTableBody = document.getElementById('stock-table-body');
-            const placeholderApi = "https://jsonplaceholder.typicode.com/posts?_limit=5"; // A placeholder API for demonstration
+            
+            const indianStocks = [
+                { symbol: 'RELIANCE.NS', name: 'Reliance Industries' },
+                { symbol: 'TCS.NS', name: 'Tata Consultancy Services' },
+                { symbol: 'HDFCBANK.NS', name: 'HDFC Bank' },
+                { symbol: 'INFY.NS', name: 'Infosys' },
+                { symbol: 'ICICIBANK.NS', name: 'ICICI Bank' },
+                { symbol: 'NTPC.NS', name: 'NTPC Limited' },
+                { symbol: 'SBIN.NS', name: 'State Bank of India' },
+                { symbol: 'BHARTIARTL.NS', name: 'Bharti Airtel' },
+                { symbol: 'MARUTI.NS', name: 'Maruti Suzuki India' },
+                { symbol: 'AXISBANK.NS', name: 'Axis Bank' }
+            ];
 
-            // Function to fetch and display dynamic stock data
             async function fetchLiveStockData() {
+                // Use a CORS proxy to bypass security restrictions
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const symbols = indianStocks.map(s => s.symbol).join(',');
+                const apiUrl = `${proxyUrl}https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}`;
+
                 try {
-                    const response = await fetch(placeholderApi);
+                    const response = await fetch(apiUrl);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     const data = await response.json();
-
-                    // This is a simulated real-time data from the API
-                    const liveStocks = data.map((item, index) => ({
-                        symbol: `STOCK${index + 1}`,
-                        name: item.title.split(' ')[0].slice(0, 15),
-                        price: (Math.random() * (2000 - 100) + 100).toFixed(2),
-                        change: (Math.random() * (10 - -10) + -10).toFixed(2)
-                    }));
-
-                    // Clear loading message and populate table
+                    
+                    // Clear the loading message
                     stockTableBody.innerHTML = '';
-                    liveStocks.forEach(stock => {
-                        const changeColor = parseFloat(stock.change) >= 0 ? 'text-green-600' : 'text-red-600';
+                    
+                    // Check if a result was returned
+                    if (!data.quoteResponse || !data.quoteResponse.result || data.quoteResponse.result.length === 0) {
+                        stockTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500 py-4">No data available for these symbols.</td></tr>`;
+                        return;
+                    }
+
+                    data.quoteResponse.result.forEach(stockData => {
+                        const symbol = stockData.symbol.replace('.NS', '');
+                        const name = stockData.longName;
+                        const price = stockData.regularMarketPrice ? stockData.regularMarketPrice.toFixed(2) : 'N/A';
+                        const change = stockData.regularMarketChangePercent ? stockData.regularMarketChangePercent.toFixed(2) : 'N/A';
+
+                        const changeColor = parseFloat(change) >= 0 ? 'text-green-600' : 'text-red-600';
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${stock.symbol}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${stock.name}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹${stock.price}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold ${changeColor}">${stock.change}%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${symbol}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${name}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹${price}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold ${changeColor}">${change}%</td>
                         `;
                         stockTableBody.appendChild(row);
                     });
