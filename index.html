@@ -206,7 +206,7 @@
                 // Use a CORS proxy to bypass security restrictions
                 const proxyUrl = 'https://api.allorigins.win/raw?url=';
                 const symbols = indianStocks.map(s => s.symbol).join(',');
-                const apiUrl = `${proxyUrl}https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}`;
+                const apiUrl = `${proxyUrl}https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}&fields=regularMarketPrice,regularMarketChangePercent,longName,symbol`;
 
                 try {
                     const response = await fetch(apiUrl);
@@ -220,7 +220,7 @@
                     
                     // Check if a result was returned
                     if (!data.quoteResponse || !data.quoteResponse.result || data.quoteResponse.result.length === 0) {
-                        stockTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500 py-4">No data available for these symbols.</td></tr>`;
+                        stockTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500 py-4">No data available. The market may be closed, or the data source is temporarily unavailable.</td></tr>`;
                         return;
                     }
 
