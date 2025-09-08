@@ -205,10 +205,10 @@
             async function fetchLiveStockData() {
                 // Construct the base URL for the Yahoo Finance API
                 const symbols = indianStocks.map(s => s.symbol).join(',');
-                const apiUrl = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}&fields=regularMarketPrice,regularMarketChangePercent,longName,symbol`;
+                const apiUrl = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}`;
                 
-                // Use a more reliable CORS proxy and encode the target URL
-                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
+                // Use a different, more reliable CORS proxy. Note: Public proxies are not a permanent solution.
+                const proxyUrl = `https://cors-anywhere.herokuapp.com/${apiUrl}`;
                 
                 try {
                     const response = await fetch(proxyUrl);
