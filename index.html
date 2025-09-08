@@ -186,7 +186,7 @@
                 stockListContainer.appendChild(createStockCard(stock));
             });
 
-            // --- Real-time Stock Data Fetching with a CORS proxy ---
+            // --- Real-time Stock Data Fetching with a more reliable proxy ---
             const stockTableBody = document.getElementById('stock-table-body');
             
             const indianStocks = [
@@ -203,13 +203,15 @@
             ];
 
             async function fetchLiveStockData() {
-                // Use a different, more reliable CORS proxy
-                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                // Construct the base URL for the Yahoo Finance API
                 const symbols = indianStocks.map(s => s.symbol).join(',');
-                const apiUrl = `${proxyUrl}https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}&fields=regularMarketPrice,regularMarketChangePercent,longName,symbol`;
-
+                const apiUrl = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}&fields=regularMarketPrice,regularMarketChangePercent,longName,symbol`;
+                
+                // Use a more reliable CORS proxy and encode the target URL
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
+                
                 try {
-                    const response = await fetch(apiUrl);
+                    const response = await fetch(proxyUrl);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
