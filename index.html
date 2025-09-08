@@ -72,6 +72,38 @@
             </div>
         </section>
 
+        <!-- Dynamic Stock Data Table -->
+        <section class="mb-8 md:mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center md:text-left">
+                Live Market Data (Simulated)
+            </h2>
+            <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Symbol</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price (₹)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Change (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stock-table-body" class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                                <div class="flex justify-center items-center">
+                                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Fetching live data...
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <!-- Modal for displaying stock details (hidden by default) -->
         <div id="stock-modal" class="modal-overlay fixed inset-0 hidden items-center justify-center p-4">
             <div class="modal-content w-full max-w-lg rounded-2xl p-8 shadow-2xl relative transition-all transform scale-95 opacity-0">
@@ -88,7 +120,7 @@
         </div>
 
         <script>
-            // Sample data for the stocks. In a real application, this would be fetched from an API.
+            // Sample data for the stocks.
             const stocks = [
                 {
                     name: 'Reliance Industries',
@@ -154,7 +186,53 @@
                 stockListContainer.appendChild(createStockCard(stock));
             });
 
-            // Get modal elements
+            // --- New Dynamic Data Fetching Section ---
+            const stockTableBody = document.getElementById('stock-table-body');
+            const placeholderApi = "https://jsonplaceholder.typicode.com/posts?_limit=5"; // A placeholder API for demonstration
+
+            // Function to fetch and display dynamic stock data
+            async function fetchLiveStockData() {
+                try {
+                    const response = await fetch(placeholderApi);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+
+                    // This is a simulated real-time data from the API
+                    const liveStocks = data.map((item, index) => ({
+                        symbol: `STOCK${index + 1}`,
+                        name: item.title.split(' ')[0].slice(0, 15),
+                        price: (Math.random() * (2000 - 100) + 100).toFixed(2),
+                        change: (Math.random() * (10 - -10) + -10).toFixed(2)
+                    }));
+
+                    // Clear loading message and populate table
+                    stockTableBody.innerHTML = '';
+                    liveStocks.forEach(stock => {
+                        const changeColor = parseFloat(stock.change) >= 0 ? 'text-green-600' : 'text-red-600';
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${stock.symbol}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${stock.name}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹${stock.price}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold ${changeColor}">${stock.change}%</td>
+                        `;
+                        stockTableBody.appendChild(row);
+                    });
+                } catch (error) {
+                    stockTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500 py-4">Error fetching data. Please try again later.</td></tr>`;
+                    console.error("Error fetching stock data:", error);
+                }
+            }
+
+            // Call the function to fetch data when the page loads
+            fetchLiveStockData();
+
+            // Refresh the data every 60 seconds (60000 milliseconds)
+            setInterval(fetchLiveStockData, 60000);
+
+            // --- Modal JavaScript (existing) ---
             const modal = document.getElementById('stock-modal');
             const modalContent = modal.querySelector('.modal-content');
             const modalTitle = document.getElementById('modal-title');
@@ -162,7 +240,6 @@
             const modalPrice = document.getElementById('modal-price');
             const modalChange = document.getElementById('modal-change');
 
-            // Function to show the modal with stock details
             function showModal(stock) {
                 modalTitle.textContent = stock.name;
                 modalDescription.textContent = stock.description;
@@ -179,7 +256,6 @@
                 }, 10);
             }
 
-            // Function to hide the modal
             function closeModal() {
                 modalContent.classList.remove('scale-100', 'opacity-100');
                 modalContent.classList.add('scale-95', 'opacity-0');
@@ -189,7 +265,6 @@
                 }, 300);
             }
 
-            // Close modal when clicking outside of it
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     closeModal();
